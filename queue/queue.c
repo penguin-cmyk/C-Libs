@@ -45,8 +45,6 @@ void queue_free(Queue* queue) {
         free(queue);
         queue = next;
     }
-
-    free(queue);
 }
 
 
