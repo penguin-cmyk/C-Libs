@@ -14,6 +14,7 @@
 
 #include "stdio.h"
 #include "stdbool.h"
+#include "ntdll.h"
 
 static bool pattern_to_bytes(const char* pattern, uint8_t* out_bytes, char* out_mask, size_t max_len, size_t* out_len) {
     size_t i = 0;
@@ -49,7 +50,7 @@ static uintptr_t scan_region(HANDLE process, uintptr_t base, size_t size, const 
     if (!buffer) return 0;
 
     SIZE_T bytes_read;
-    if (!ReadProcessMemory(process, (LPCVOID)base, buffer, size, &bytes_read) || bytes_read < pattern_len) {
+    if (!NtReadVirtualMemoryEx(process, (PVOID)base, buffer, size, &bytes_read) || bytes_read < pattern_len) {
         free(buffer);
         return 0;
     }
