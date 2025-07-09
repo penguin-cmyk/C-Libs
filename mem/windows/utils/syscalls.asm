@@ -1,3 +1,4 @@
+; nasm 
 %macro SYSCALL_STUB 2
 global %1
 section .text
